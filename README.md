@@ -52,6 +52,8 @@
 
 ###
 
+<br clear="both">
+
 <img src="https://raw.githubusercontent.com/daniesquivelc97/daniesquivelc97/output/snake.svg" alt="Snake animation" />
 
 ###
