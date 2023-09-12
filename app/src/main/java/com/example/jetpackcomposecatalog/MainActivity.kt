@@ -44,9 +44,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Column {
-                        MyTextFieldOutlined()
+                        MyButtonExample()
                     }
-                    
+
                 }
             }
         }
