@@ -91,10 +91,14 @@ class MainActivity : ComponentActivity() {
                             Button(onClick = { showDialog = true }) {
                                 Text(text = "Mostrar diálogo")
                             }
-                            MyDialog(show = showDialog,
+                            /*MyDialog(show = showDialog,
                                 onDismiss = { showDialog = false },
                                 onCOnfirm =
-                                { Log.i("Daniel", "Esquivel") })
+                                { Log.i("Daniel", "Esquivel") })*/
+                            /*MyCustomDialog(show = showDialog,
+                                onDismiss = { showDialog = false })*/
+                            MyConfirmationDialog(show = showDialog,
+                                onDismiss = { showDialog = false })
                         }
                         MyRangeSlider()
                         MyAdvanceSlider()
