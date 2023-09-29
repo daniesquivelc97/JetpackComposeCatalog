@@ -80,7 +80,8 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val myOptions = getOptions(listOf("Daniel", "Moscú", "Ejemplo"))
+                    SuperHeroGridView()
+                    /*val myOptions = getOptions(listOf("Daniel", "Moscú", "Ejemplo"))
                     var selected by rememberSaveable { mutableStateOf("Daniel") }
                     var showDialog by rememberSaveable { mutableStateOf(false) }
                     Column {
@@ -91,12 +92,12 @@ class MainActivity : ComponentActivity() {
                             Button(onClick = { showDialog = true }) {
                                 Text(text = "Mostrar diálogo")
                             }
-                            /*MyDialog(show = showDialog,
+                            *//*MyDialog(show = showDialog,
                                 onDismiss = { showDialog = false },
                                 onCOnfirm =
-                                { Log.i("Daniel", "Esquivel") })*/
-                            /*MyCustomDialog(show = showDialog,
-                                onDismiss = { showDialog = false })*/
+                                { Log.i("Daniel", "Esquivel") })*//*
+                            *//*MyCustomDialog(show = showDialog,
+                                onDismiss = { showDialog = false })*//*
                             MyConfirmationDialog(show = showDialog,
                                 onDismiss = { showDialog = false })
                         }
@@ -114,7 +115,7 @@ class MainActivity : ComponentActivity() {
                             MyCheckBoxWithTextCompleted(it)
                         }
 
-                    }
+                    } */
 
                 }
             }
