@@ -2,7 +2,9 @@ package com.example.jetpackcomposecatalog
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,6 +17,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
@@ -29,6 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.jetpackcomposecatalog.model.SuperHero
+import kotlinx.coroutines.launch
 
 @Composable
 fun SimpleRecyclerView() {
@@ -47,13 +52,76 @@ fun SimpleRecyclerView() {
 @Composable
 fun SuperHeroView() {
     val context = LocalContext.current
-    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         items(getSuperHeroes()) { superHero ->
             ItemHero(superHero = superHero) {
                 Toast.makeText(context, it.superHeroName, Toast.LENGTH_SHORT).show()
             }
         }
     }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun SuperHeroStickyView() {
+    val context = LocalContext.current
+    val superHero: Map<String, List<SuperHero>> = getSuperHeroes().groupBy { it.publisher }
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        superHero.forEach { (publisher, mySuperHero) ->
+            stickyHeader { 
+                Text(text = publisher, modifier = Modifier.fillMaxWidth().background(Color.Green), fontSize = 16.sp, color = Color.White)
+            }
+            items(mySuperHero) { superHero ->
+                ItemHero(superHero = superHero) {
+                    Toast.makeText(context, it.superHeroName, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+    }
+
+}
+
+@Composable
+fun SuperHeroWithSpecialControlsView() {
+    val context = LocalContext.current
+    val recyclerViewState = rememberLazyListState()
+    var coroutineScope = rememberCoroutineScope()
+    Column {
+        LazyColumn(
+            state = recyclerViewState,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.weight(1f)
+        ) {
+            items(getSuperHeroes()) { superHero ->
+                ItemHero(superHero = superHero) {
+                    Toast.makeText(context, it.superHeroName, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        val showButton by remember {
+            derivedStateOf { recyclerViewState.firstVisibleItemIndex > 0 }
+
+        }
+
+        recyclerViewState.firstVisibleItemScrollOffset
+
+        if (showButton) {
+            Button(
+                onClick = {
+                    coroutineScope.launch { recyclerViewState.scrollToItem(0) }
+                },
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(16.dp)
+            ) {
+                Text(text = "Presionar")
+            }
+        }
+
+
+    }
+
 }
 
 @Composable
@@ -74,7 +142,7 @@ fun ItemHero(superHero: SuperHero, onItemSelected: (SuperHero) -> Unit) {
         border = BorderStroke(2.dp, Color.Red),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
         modifier = Modifier
-            .width(200.dp)
+            .fillMaxWidth()
             .clickable { onItemSelected(superHero) }
             .padding(vertical = 8.dp, horizontal = 16.dp)
     ) {
