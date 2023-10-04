@@ -1,7 +1,6 @@
 package com.example.jetpackcomposecatalog
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -12,7 +11,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,7 +23,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -34,9 +31,7 @@ import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -69,6 +64,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.jetpackcomposecatalog.model.Routes
 import com.example.jetpackcomposecatalog.ui.theme.JetPackComposeCatalogTheme
 
 class MainActivity : ComponentActivity() {
@@ -80,7 +81,37 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ScaffoldExample()
+                    val navigationController = rememberNavController()
+                    NavHost(
+                        navController = navigationController,
+                        startDestination = Routes.Screen1.route
+                    ) {
+                        composable(Routes.Screen1.route) {
+                            ScreenOne(navigationController)
+                        }
+                        composable(Routes.Screen2.route) {
+                            ScreenTwo(navigationController)
+                        }
+                        composable(Routes.Screen3.route) {
+                            ScreenThree(navigationController)
+                        }
+                        composable(
+                            Routes.Screen4.route,
+                            arguments = listOf(navArgument("age") { type = NavType.IntType })
+                        ) { backStackEntry ->
+                            ScreenFour(
+                                navigationController,
+                                backStackEntry.arguments?.getInt("age") ?: 0
+                            )
+                        }
+                        composable(
+                            Routes.Screen5.route,
+                            arguments = listOf(navArgument("name") { defaultValue = "Moscú" })
+                        ) { backStackEntry ->
+                            ScreenFive(navController = navigationController, backStackEntry.arguments?.getString("name"))
+                        }
+                    }
+                    //ScaffoldExample()
                     //SuperHeroStickyView()
                     /*val myOptions = getOptions(listOf("Daniel", "Moscú", "Ejemplo"))
                     var selected by rememberSaveable { mutableStateOf("Daniel") }
