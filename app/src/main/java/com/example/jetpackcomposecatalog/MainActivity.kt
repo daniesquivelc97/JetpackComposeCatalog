@@ -80,7 +80,8 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SuperHeroStickyView()
+                    ScaffoldExample()
+                    //SuperHeroStickyView()
                     /*val myOptions = getOptions(listOf("Daniel", "Moscú", "Ejemplo"))
                     var selected by rememberSaveable { mutableStateOf("Daniel") }
                     var showDialog by rememberSaveable { mutableStateOf(false) }
