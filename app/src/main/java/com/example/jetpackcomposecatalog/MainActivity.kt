@@ -81,7 +81,11 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navigationController = rememberNavController()
+                    CrossFadeAnimationExample()
+                    //VisibilityAnimation()
+                    //SizeAnimation()
+                    // ColorAnimationSimple()
+                    /* val navigationController = rememberNavController()
                     NavHost(
                         navController = navigationController,
                         startDestination = Routes.Screen1.route
@@ -109,7 +113,7 @@ class MainActivity : ComponentActivity() {
                             arguments = listOf(navArgument("name") { defaultValue = "Moscú" })
                         ) { backStackEntry ->
                             ScreenFive(navController = navigationController, backStackEntry.arguments?.getString("name"))
-                        }
+                        }*/
                     }
                     //ScaffoldExample()
                     //SuperHeroStickyView()
@@ -147,9 +151,9 @@ class MainActivity : ComponentActivity() {
                             MyCheckBoxWithTextCompleted(it)
                         }
 
-                    } */
+                    }
 
-                }
+                }*/
             }
         }
     }
